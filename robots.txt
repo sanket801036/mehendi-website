@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.github.io/mehendi-website/sitemap.xml
+Sitemap: https://sanket801036.github.io/mehendi-website/sitemap.xml

@@ -18,8 +18,8 @@ window.AdminAuth = (function () {
 
   /* ---- Setup ke baad yahan hash aa jaata hai (password nahi) ---- */
   var CONFIG = {
-    salt: "",
-    hash: "",
+    salt: "JAKEEbLOCz+BEneInkCh6g==",
+    hash: "gsr53ZedAeIKeUNmE/WhH+SlNa9fmDV4O7ZW7VDdOrs=",
     iterations: 210000,
   };
 
