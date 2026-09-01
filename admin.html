@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Panel | Mehendi by Swity</title>
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="ad-head">
+  <div class="ad-head__in">
+    <div class="ad-brand">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2c.6 3 2.4 4.6 4.6 5.6C19 8.7 20 10.6 20 13a8 8 0 0 1-16 0c0-2.4 1-4.3 3.4-5.4C9.6 6.6 11.4 5 12 2z"/>
+      </svg>
+      <span>Admin Panel</span>
+    </div>
+    <div class="ad-head__actions">
+      <span class="ad-link" id="linkStatus"></span>
+      <button class="ad-btn ad-btn--ghost" id="btnConnect">Folder jodo</button>
+      <a href="index.html" target="_blank" class="ad-btn ad-btn--ghost" id="btnPreview">Site dekho</a>
+      <button class="ad-btn ad-btn--primary" id="btnExport">Download (ZIP)</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= LOCAL-ONLY WARNING ================= -->
+<div class="ad-notice" id="notice">
+  <strong>Ek baar ye kar lijiye —</strong> upar <b>"Folder jodo"</b> dabaiye aur
+  <code>mehendi-website</code> folder chuniye. Uske baad jo bhi save karenge wo
+  seedha website me chala jayega, aur asli site turant update ho jayegi.
+  <button class="ad-notice__x" id="noticeX" aria-label="Band karein">&times;</button>
+</div>
+
+<div class="ad-notice ad-notice--ok" id="noticeOk" hidden>
+  <strong>Folder juda hua hai —</strong> <span id="okFolder"></span>. Ab har save
+  seedha website me likha jaata hai. <b>"Site dekho"</b> dabakar check kar sakte hain.
+  <button class="ad-notice__x" id="noticeOkX" aria-label="Band karein">&times;</button>
+</div>
+
+<!-- ================= TABS ================= -->
+<nav class="ad-tabs" role="tablist">
+  <button class="ad-tab is-active" data-tab="gallery" role="tab" aria-selected="true">Designs <span class="ad-count" id="cGallery">0</span></button>
+  <button class="ad-tab" data-tab="packages" role="tab" aria-selected="false">Rates <span class="ad-count" id="cPackages">0</span></button>
+  <button class="ad-tab" data-tab="faqs" role="tab" aria-selected="false">FAQ <span class="ad-count" id="cFaqs">0</span></button>
+  <button class="ad-tab" data-tab="stats" role="tab" aria-selected="false">Numbers</button>
+  <button class="ad-tab" data-tab="site" role="tab" aria-selected="false">Contact</button>
+</nav>
+
+<main class="ad-main">
+
+  <!-- ============ DESIGNS ============ -->
+  <section class="ad-panel is-active" data-panel="gallery">
+    <div class="ad-panel__head">
+      <div>
+        <h2>Gallery ke designs</h2>
+        <p>Photo daaliye, category chuniye, aur chahein to rate bhi likh dijiye.</p>
+      </div>
+      <button class="ad-btn ad-btn--primary" id="btnAddDesign">+ Naya design</button>
+    </div>
+
+    <div class="ad-filterbar" id="galleryCats"></div>
+    <div class="ad-grid" id="galleryList"></div>
+    <p class="ad-empty" id="galleryEmpty" hidden>Abhi koi design nahi hai. Upar "+ Naya design" dabaiye.</p>
+  </section>
+
+  <!-- ============ PACKAGES ============ -->
+  <section class="ad-panel" data-panel="packages">
+    <div class="ad-panel__head">
+      <div>
+        <h2>Packages aur rates</h2>
+        <p>Original price aur discount wala rate dono daaliye — site pe kata hua price aur "OFF" badge dikhega.</p>
+      </div>
+      <button class="ad-btn ad-btn--primary" id="btnAddPackage">+ Naya package</button>
+    </div>
+    <div class="ad-list" id="packageList"></div>
+    <p class="ad-empty" id="packageEmpty" hidden>Abhi koi package nahi hai.</p>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="ad-panel" data-panel="faqs">
+    <div class="ad-panel__head">
+      <div>
+        <h2>Sawaal-Jawaab</h2>
+        <p>Jo sawaal client baar-baar poochhte hain, wo yahan daal dijiye.</p>
+      </div>
+      <button class="ad-btn ad-btn--primary" id="btnAddFaq">+ Naya sawaal</button>
+    </div>
+    <div class="ad-list" id="faqList"></div>
+    <p class="ad-empty" id="faqEmpty" hidden>Abhi koi sawaal nahi hai.</p>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="ad-panel" data-panel="stats">
+    <div class="ad-panel__head">
+      <div>
+        <h2>Hero ke neeche wale numbers</h2>
+        <p>Jaise "5+ Saal ka Experience". Asli aankde hi daaliye.</p>
+      </div>
+      <button class="ad-btn ad-btn--primary" id="btnAddStat">+ Naya number</button>
+    </div>
+    <div class="ad-list" id="statList"></div>
+  </section>
+
+  <!-- ============ SITE / CONTACT ============ -->
+  <section class="ad-panel" data-panel="site">
+    <div class="ad-panel__head">
+      <div>
+        <h2>Contact aur site ki details</h2>
+        <p>Naam, WhatsApp number, sheher aur social links.</p>
+      </div>
+    </div>
+
+    <form class="ad-form ad-form--site" id="siteForm">
+      <div class="ad-field"><label for="sBrand">Business ka naam</label>
+        <input id="sBrand" data-site="brand" type="text" placeholder="Mehendi by Swity"></div>
+      <div class="ad-field"><label for="sArtist">Pura naam</label>
+        <input id="sArtist" data-site="artist" type="text" placeholder="Swity Tularam Kolhe"></div>
+      <div class="ad-field"><label for="sShort">Chhota naam (About me)</label>
+        <input id="sShort" data-site="artistShort" type="text" placeholder="Swity"></div>
+      <div class="ad-field ad-field--full"><label for="sTagline">Tagline</label>
+        <input id="sTagline" data-site="tagline" type="text"></div>
+
+      <div class="ad-field"><label for="sWa">WhatsApp number <span class="ad-req">*</span></label>
+        <input id="sWa" data-site="whatsapp" type="text" inputmode="numeric" placeholder="919145671694">
+        <small class="ad-hint">91 ke saath, bina + aur bina space ke</small>
+        <small class="ad-err" data-err="sWa"></small></div>
+      <div class="ad-field"><label for="sPhone">Number (dikhane ke liye)</label>
+        <input id="sPhone" data-site="phone" type="text" placeholder="+91 91456 71694"></div>
+      <div class="ad-field"><label for="sEmail">Email</label>
+        <input id="sEmail" data-site="email" type="email" placeholder="khaali chhodo to hide rahega">
+        <small class="ad-err" data-err="sEmail"></small></div>
+      <div class="ad-field"><label for="sInsta">Instagram link</label>
+        <input id="sInsta" data-site="instagram" type="url" placeholder="https://instagram.com/..."></div>
+
+      <div class="ad-field"><label for="sCity">Sheher</label>
+        <input id="sCity" data-site="city" type="text" placeholder="Warud"></div>
+      <div class="ad-field"><label for="sSeo">Title me jagah</label>
+        <input id="sSeo" data-site="seoArea" type="text" placeholder="Warud, Amravati"></div>
+      <div class="ad-field"><label for="sPin">Pincode</label>
+        <input id="sPin" data-site="postalCode" type="text" inputmode="numeric" placeholder="444906"></div>
+      <div class="ad-field"><label for="sWeb3">Web3Forms key (email form)</label>
+        <input id="sWeb3" data-site="web3formsKey" type="text" placeholder="khaali = email button hide"></div>
+
+      <div class="ad-field ad-field--full"><label for="sAreas">Service area (comma se alag)</label>
+        <input id="sAreas" data-site="areas" type="text"
+               placeholder="Warud, Morshi, Amravati, Katol, Nagpur aur aas-paas ke ilaake"></div>
+    </form>
+
+    <div class="ad-danger">
+      <div>
+        <h3>Sab kuch mitaayein</h3>
+        <p>Admin ka saara data aur photos is browser se hat jayenge. Website ki files par koi asar nahi hoga.</p>
+      </div>
+      <button class="ad-btn ad-btn--danger" id="btnReset">Reset karein</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= DESIGN MODAL ================= -->
+<div class="ad-modal" id="designModal" hidden>
+  <div class="ad-modal__box" role="dialog" aria-modal="true" aria-labelledby="dmTitle">
+    <div class="ad-modal__head">
+      <h3 id="dmTitle">Naya design</h3>
+      <button class="ad-modal__x" data-close aria-label="Band karein">&times;</button>
+    </div>
+
+    <form class="ad-form" id="designForm">
+      <div class="ad-field ad-field--full">
+        <label>Photo <span class="ad-req">*</span></label>
+        <div class="ad-drop" id="drop">
+          <input type="file" id="dFile" accept="image/*" hidden>
+          <img id="dPreview" alt="" hidden>
+          <div class="ad-drop__msg" id="dropMsg">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.8"/>
+              <path d="m21 15-5-5L5 21"/>
+            </svg>
+            <b>Photo chuniye</b>
+            <span>ya yahan drag karke chhod dijiye</span>
+          </div>
+        </div>
+        <small class="ad-hint" id="dFileInfo">Badi photo apne aap chhoti kar di jayegi (max 1400px, ~200KB)</small>
+        <small class="ad-err" data-err="dFile"></small>
+      </div>
+
+      <div class="ad-field">
+        <label for="dCategory">Category <span class="ad-req">*</span></label>
+        <input id="dCategory" list="catList" type="text" placeholder="bridal">
+        <datalist id="catList"></datalist>
+        <small class="ad-hint">Nayi category likh do to nayi ban jayegi</small>
+        <small class="ad-err" data-err="dCategory"></small>
+      </div>
+
+      <div class="ad-field">
+        <label for="dTitle">Design ka naam</label>
+        <input id="dTitle" type="text" placeholder="Full haath bridal">
+      </div>
+
+      <div class="ad-field ad-field--full">
+        <label for="dAlt">Photo me kya hai <span class="ad-req">*</span></label>
+        <input id="dAlt" type="text" placeholder="Full haath bridal mehendi design dulhan ke liye">
+        <small class="ad-hint">Google aur screen-reader ke liye — chhota sa description</small>
+        <small class="ad-err" data-err="dAlt"></small>
+      </div>
+
+      <div class="ad-field">
+        <label for="dMrp">Original price (₹)</label>
+        <input id="dMrp" type="number" min="0" step="10" placeholder="1000">
+        <small class="ad-hint">Kata hua dikhega. Khaali chhod sakte ho.</small>
+      </div>
+
+      <div class="ad-field">
+        <label for="dPrice">Aaj ka price (₹)</label>
+        <input id="dPrice" type="number" min="0" step="10" placeholder="800">
+        <small class="ad-err" data-err="dPrice"></small>
+      </div>
+
+      <div class="ad-field ad-field--full">
+        <div class="ad-discount" id="dDiscount" hidden></div>
+      </div>
+
+      <div class="ad-modal__foot ad-field--full">
+        <button type="button" class="ad-btn ad-btn--ghost" data-close>Rehne dijiye</button>
+        <button type="submit" class="ad-btn ad-btn--primary" id="dSave">Save karein</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= PACKAGE MODAL ================= -->
+<div class="ad-modal" id="packageModal" hidden>
+  <div class="ad-modal__box" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+    <div class="ad-modal__head">
+      <h3 id="pmTitle">Naya package</h3>
+      <button class="ad-modal__x" data-close aria-label="Band karein">&times;</button>
+    </div>
+
+    <form class="ad-form" id="packageForm">
+      <div class="ad-field">
+        <label for="pName">Package ka naam <span class="ad-req">*</span></label>
+        <input id="pName" type="text" placeholder="Bridal Package">
+        <small class="ad-err" data-err="pName"></small>
+      </div>
+      <div class="ad-field">
+        <label for="pUnit">Price ke neeche ki line</label>
+        <input id="pUnit" type="text" placeholder="se shuru (dono haath)">
+      </div>
+
+      <div class="ad-field">
+        <label for="pMrp">Original price (₹)</label>
+        <input id="pMrp" type="number" min="0" step="50" placeholder="4500">
+      </div>
+      <div class="ad-field">
+        <label for="pPrice">Aaj ka price (₹) <span class="ad-req">*</span></label>
+        <input id="pPrice" type="text" inputmode="numeric" placeholder="3500">
+        <small class="ad-hint">Number likhiye, ya "Custom" jaisa koi shabd</small>
+        <small class="ad-err" data-err="pPrice"></small>
+      </div>
+
+      <div class="ad-field ad-field--full">
+        <div class="ad-discount" id="pDiscount" hidden></div>
+      </div>
+
+      <div class="ad-field ad-field--full">
+        <label for="pDesc">Chhota description</label>
+        <textarea id="pDesc" rows="2" placeholder="Dulhan ke liye complete bridal mehendi..."></textarea>
+      </div>
+
+      <div class="ad-field ad-field--full">
+        <label for="pFeatures">Kya-kya milega (har line pe ek)</label>
+        <textarea id="pFeatures" rows="4" placeholder="Haath kohni tak + paer&#10;Dulha-dulhan motif&#10;3-5 ghante"></textarea>
+      </div>
+
+      <div class="ad-field ad-field--full">
+        <label class="ad-check">
+          <input type="checkbox" id="pFeatured">
+          <span>Ise "Sabse Popular" banaiye (ek waqt me ek hi)</span>
+        </label>
+      </div>
+
+      <div class="ad-modal__foot ad-field--full">
+        <button type="button" class="ad-btn ad-btn--ghost" data-close>Rehne dijiye</button>
+        <button type="submit" class="ad-btn ad-btn--primary">Save karein</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= FAQ MODAL ================= -->
+<div class="ad-modal" id="faqModal" hidden>
+  <div class="ad-modal__box" role="dialog" aria-modal="true" aria-labelledby="fmTitle">
+    <div class="ad-modal__head">
+      <h3 id="fmTitle">Naya sawaal</h3>
+      <button class="ad-modal__x" data-close aria-label="Band karein">&times;</button>
+    </div>
+    <form class="ad-form" id="faqForm">
+      <div class="ad-field ad-field--full">
+        <label for="fQ">Sawaal <span class="ad-req">*</span></label>
+        <input id="fQ" type="text" placeholder="Booking kitne din pehle karni chahiye?">
+        <small class="ad-err" data-err="fQ"></small>
+      </div>
+      <div class="ad-field ad-field--full">
+        <label for="fA">Jawaab <span class="ad-req">*</span></label>
+        <textarea id="fA" rows="5"></textarea>
+        <small class="ad-err" data-err="fA"></small>
+      </div>
+      <div class="ad-modal__foot ad-field--full">
+        <button type="button" class="ad-btn ad-btn--ghost" data-close>Rehne dijiye</button>
+        <button type="submit" class="ad-btn ad-btn--primary">Save karein</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= TOAST ================= -->
+<div class="ad-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/config.js"></script>
+<script src="js/admin-store.js"></script>
+<script src="js/admin-export.js"></script>
+<script src="js/admin-publish.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

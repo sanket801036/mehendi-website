@@ -1,0 +1,17 @@
+# Testing ke temporary files (screenshot/debug ke liye bante hain)
+_shot.html
+_test.html
+_a.html
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Admin se download ki hui ZIP
+mehendi-site-*.zip
