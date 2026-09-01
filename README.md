@@ -139,6 +139,31 @@ refresh kariye, nayi design wahan hogi.
 > Folder ek hi baar chunna hota hai. Browser band karke dobara kholenge to Chrome
 > ek baar permission phir se poochh sakta hai — bas "Allow" dabaiye.
 
+### Admin ka password
+
+Pehli baar admin kholenge to wo password banane ko kahega. Password kahin save
+**nahi** hota — sirf uska PBKDF2 hash (2,10,000 iterations) rakha jaata hai,
+jisse password wapas nikaalna practically namumkin hai.
+
+Agar folder juda hua hai to hash apne aap `js/admin-auth.js` me likh diya jaata
+hai — matlab wahi password doosre browser me aur deploy ke baad bhi chalega
+(us file ko commit karna na bhooliyega). Folder juda nahi hai to wo hash ka
+snippet dikha dega jise us file me paste karna hoga.
+
+Header me **"Lock"** button se kabhi bhi lock kar sakte hain. Login pe
+"30 din yaad rakhiye" tick karenge to baar-baar password nahi maangega.
+
+Password badalna ho: `js/admin-auth.js` me `CONFIG` ka `salt` aur `hash` khaali
+kar dijiye (`salt: "", hash: ""`), page refresh kijiye — naya password banane
+ko kahega.
+
+> **Imaandari se:** ye site static hai, isliye ye lock *taala* hai, *tijori*
+> nahi. Jo banda page ka source padhna jaanta ho wo ise hata sakta hai.
+> Abhi isse koi nuksaan nahi, kyunki admin kisi server pe kuch likhta hi nahi —
+> wo sirf aapke browser aur aapke chune hue folder me kaam karta hai, aur uska
+> koi network call nahi hai. Jis din GitHub token add hoga, us din asli
+> protection zaroori ho jayegi.
+
 ### Live site pe daalna
 
 Folder jodne ke baad files aapke computer par update hoti hain. Internet par
@@ -207,6 +232,8 @@ css/admin.css       admin ke styles
 js/admin-store.js   data localStorage me, photos IndexedDB me
 js/admin-export.js  config.js banata hai + ZIP banata hai
 js/admin-publish.js seedha project folder me file likhta hai
+js/admin-auth.js    password ka hash + verify (password nahi)
+js/admin-gate.js    lock screen ka logic
 js/admin.js         admin ka UI logic
 images/gallery/     ★ design photos yahan
 favicon.svg         browser tab ka icon
@@ -234,3 +261,4 @@ favicon.svg         browser tab ka icon
 - Mobile-first responsive, keyboard-accessible
 - **Admin panel** — photo upload, rates, FAQ, contact sab UI se
 - Admin se save karte hi asli site update (folder jodne ke baad)
+- Admin password se locked (PBKDF2 hash, password kahin save nahi hota)

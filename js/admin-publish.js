@@ -163,7 +163,14 @@ window.Publish = (function () {
     return removeFile("images/gallery/" + file);
   }
 
+  /** Koi bhi text file folder me likho (gate isse admin-auth.js likhta hai) */
+  function writeText(path, text) {
+    if (!dirHandle) return Promise.reject(new Error("Pehle folder jodiye"));
+    return writeFile(path, text);
+  }
+
   return {
+    writeText: writeText,
     supported: supported,
     connect: connect,
     restore: restore,

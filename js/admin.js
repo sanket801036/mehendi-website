@@ -728,9 +728,10 @@
   Publish.onChange(setLinkUI);
 
   /* ============================================================
-     START
+     START - lock khulne ke baad hi
      ============================================================ */
 
+  function start() {
   renderCats();
   renderGallery();
   renderPackages();
@@ -750,5 +751,12 @@
       'likhne ke liye <b>Chrome</b> ya <b>Edge</b> use kijiye, ya "Download (ZIP)" se files nikaliye.' +
       '<button class="ad-notice__x" id="noticeX2" aria-label="Band karein">&times;</button>';
     $("#noticeX2").addEventListener("click", function () { $("#notice").hidden = true; });
+  }
+  }
+
+  if (document.body.classList.contains("is-unlocked")) {
+    start();
+  } else {
+    document.addEventListener("admin:unlocked", start, { once: true });
   }
 })();

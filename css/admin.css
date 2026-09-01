@@ -386,3 +386,65 @@ button { cursor: pointer; border: none; background: none; }
   background: rgba(0,0,0,.06); padding: .05rem .35rem; border-radius: 4px;
   font-size: .92em;
 }
+
+/* ============================================================
+   LOCK SCREEN
+   ============================================================ */
+.ad-gate {
+  position: fixed; inset: 0; z-index: 200;
+  display: grid; place-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(150deg, var(--maroon-dark) 0%, #3E0D1D 55%, #2A3A18 100%);
+  overflow-y: auto;
+}
+.ad-gate[hidden] { display: none; }
+
+/* jab tak lock hai, admin ka content na dikhe (na hi flash ho) */
+body:not(.is-unlocked) .ad-head,
+body:not(.is-unlocked) .ad-notice,
+body:not(.is-unlocked) .ad-tabs,
+body:not(.is-unlocked) .ad-main { display: none; }
+
+.ad-gate__box {
+  width: min(410px, 100%);
+  background: var(--cream);
+  border-radius: var(--r2);
+  padding: 2.2rem 2rem 1.6rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+}
+.ad-gate__mark {
+  width: 58px; height: 58px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--cream-2); color: var(--maroon);
+  margin: 0 auto 1.2rem;
+}
+.ad-gate h1 {
+  font-size: 1.4rem; text-align: center; margin-bottom: .4rem;
+}
+.ad-gate__sub {
+  font-size: .87rem; color: var(--ink-soft);
+  text-align: center; margin-bottom: 1.4rem;
+}
+.ad-gate .ad-field { margin-bottom: .9rem; }
+.ad-gate .ad-check { margin-bottom: 1.1rem; font-size: .84rem; color: var(--ink-soft); }
+.ad-gate__go { width: 100%; padding-top: .75rem; padding-bottom: .75rem; }
+.ad-gate__foot {
+  font-size: .8rem; color: var(--ink-soft);
+  text-align: center; margin-top: 1rem;
+}
+.ad-gate__note {
+  font-size: .74rem; color: var(--ink-soft);
+  text-align: center; line-height: 1.5;
+  margin-top: 1.4rem; padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.ad-gate textarea {
+  width: 100%; font-family: ui-monospace, Consolas, monospace;
+  font-size: .74rem; padding: .7rem;
+  border: 1.4px solid var(--line); border-radius: 9px;
+  background: var(--white); resize: vertical; margin-bottom: .7rem;
+}
+.ad-gate #gateCopy { width: 100%; margin-bottom: .6rem; }
+
+/* header me lock button */
+.ad-btn--lock { padding-left: .8rem; padding-right: .8rem; }

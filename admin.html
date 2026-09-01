@@ -15,6 +15,69 @@
 
 <body>
 
+<!-- ================= LOCK SCREEN ================= -->
+<div class="ad-gate" id="gate">
+  <div class="ad-gate__box">
+    <div class="ad-gate__mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7">
+        <rect x="4" y="10" width="16" height="10" rx="2"/>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+      </svg>
+    </div>
+
+    <!-- pehli baar: password banao -->
+    <form id="gateSetup" hidden>
+      <h1>Admin ka password banaiye</h1>
+      <p class="ad-gate__sub">Ye pehli baar hai. Jo password yahan banayenge wahi
+         aage admin kholne ke liye lagega.</p>
+      <div class="ad-field">
+        <label for="gp1">Naya password</label>
+        <input type="password" id="gp1" autocomplete="new-password" minlength="6">
+        <small class="ad-hint">Kam se kam 6 akshar</small>
+      </div>
+      <div class="ad-field">
+        <label for="gp2">Dobara likhiye</label>
+        <input type="password" id="gp2" autocomplete="new-password">
+        <small class="ad-err" data-err="gp2"></small>
+      </div>
+      <button type="submit" class="ad-btn ad-btn--primary ad-gate__go">Password set karein</button>
+    </form>
+
+    <!-- baad me: password daalo -->
+    <form id="gateLogin" hidden>
+      <h1>Admin Panel</h1>
+      <p class="ad-gate__sub">Aage badhne ke liye password daaliye.</p>
+      <div class="ad-field">
+        <label for="gp">Password</label>
+        <input type="password" id="gp" autocomplete="current-password">
+        <small class="ad-err" data-err="gp"></small>
+      </div>
+      <label class="ad-check">
+        <input type="checkbox" id="gpRemember">
+        <span>Is browser me 30 din yaad rakhiye</span>
+      </label>
+      <button type="submit" class="ad-btn ad-btn--primary ad-gate__go">Kholiye</button>
+      <p class="ad-gate__foot">Password bhool gaye? <a href="#" id="gateForget">Naya password banaiye</a>
+         — purana data waise ka waisa rahega.</p>
+    </form>
+
+    <!-- password set hone ke baad file me daalne ke liye -->
+    <div id="gateSaved" hidden>
+      <h1>Password set ho gaya</h1>
+      <p class="ad-gate__sub" id="gateSavedMsg"></p>
+      <textarea id="gateSnippet" rows="5" readonly></textarea>
+      <button type="button" class="ad-btn ad-btn--ghost" id="gateCopy">Copy karein</button>
+      <button type="button" class="ad-btn ad-btn--primary ad-gate__go" id="gateDone">Aage badhiye</button>
+    </div>
+
+    <p class="ad-gate__note">
+      Ye taala casual logo ko rokta hai. Site static hai, isliye jo banda page ka
+      source padhna jaanta ho wo ise hata sakta hai — abhi isse koi nuksaan nahi,
+      kyunki admin kisi server pe kuch likhta hi nahi.
+    </p>
+  </div>
+</div>
+
 <!-- ================= HEADER ================= -->
 <header class="ad-head">
   <div class="ad-head__in">
@@ -29,6 +92,7 @@
       <button class="ad-btn ad-btn--ghost" id="btnConnect">Folder jodo</button>
       <a href="index.html" target="_blank" class="ad-btn ad-btn--ghost" id="btnPreview">Site dekho</a>
       <button class="ad-btn ad-btn--primary" id="btnExport">Download (ZIP)</button>
+      <button class="ad-btn ad-btn--ghost ad-btn--lock" id="btnLock" title="Admin lock karein">Lock</button>
     </div>
   </div>
 </header>
@@ -327,9 +391,11 @@
 <div class="ad-toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/config.js"></script>
+<script src="js/admin-auth.js"></script>
 <script src="js/admin-store.js"></script>
 <script src="js/admin-export.js"></script>
 <script src="js/admin-publish.js"></script>
 <script src="js/admin.js"></script>
+<script src="js/admin-gate.js"></script>
 </body>
 </html>
