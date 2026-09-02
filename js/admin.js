@@ -728,7 +728,7 @@
   Publish.onChange(setLinkUI);
 
   /* ============================================================
-     START - lock khulne ke baad hi
+     START
      ============================================================ */
 
   function start() {
@@ -754,9 +754,5 @@
   }
   }
 
-  if (document.body.classList.contains("is-unlocked")) {
-    start();
-  } else {
-    document.addEventListener("admin:unlocked", start, { once: true });
-  }
+  start();
 })();
